@@ -1,0 +1,34 @@
+# 编译产物
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# 输出目录
+/bin/
+/dist/
+/build/
+
+# 依赖
+/vendor/
+
+# Go workspace
+go.work
+go.work.sum
+
+# 覆盖率 / 性能剖析
+*.out
+coverage.txt
+cpu.prof
+mem.prof
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# 系统
+.DS_Store
+Thumbs.db
