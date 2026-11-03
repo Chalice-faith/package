@@ -148,6 +148,29 @@ M081-S011  M082-S001  M083-S008  M084-S004  M085-S001  M086-S006  M087-S009  M08
 M091-S009  M092-S007  M093-S004  M094-S004  M095-S010  M096-S001  M097-S001  M098-S001  M099-S001  M100-S001
 ```
 
+## 附录 C：字段基线（2026-11 核对）
+
+字段名以 FOFA 语法表为准，禁止臆造。常用集合：
+
+- 基础：`ip` `port` `domain` `host` `os` `server` `asn` `org` `is_domain` `is_ipv6`
+- 标记：`app` `fid` `product` `product.version` `category` `type` `cloud_name` `is_cloud` `is_fraud` `is_honeypot`
+- 协议：`protocol` `banner` `base_protocol`
+- Web：`title` `header` `header_hash` `body` `body_hash` `js_name` `js_md5` `cname` `cname_domain` `icon_hash` `status_code` `icp` `sdk_hash`
+- 地理：`country` `region` `city`
+- 证书：`cert` `cert.subject` `cert.issuer` `cert.subject.org` `cert.subject.cn` `cert.issuer.org` `cert.issuer.cn` `cert.domain` `cert.sn` `cert.is_equal` `cert.is_valid` `cert.is_match` `cert.is_expired` `jarm` `tls.version` `tls.ja3s` `cert.not_after.after` `cert.not_after.before` `cert.not_before.after` `cert.not_before.before`
+- 时间：`after` `before`
+- 独立 IP：`ip_filter()` `ip_exclude()` `port_size` `ip_ports` `ip_country` 等
+
+运算符注意（社区矩阵，实战需复验）：
+
+- 仅支持 `=`：`app`、`is_*` 布尔字段、`after`/`before`、`cert.is_*`、`cert.not_after.*`、`ip_filter()`、`ip_ports`。
+- 支持 `=`/`!=`：`banner`、`body`、`status_code`、`cert`、`tls.version`、`icon_hash`、`fid`、`product.version`。
+- 支持模糊：`domain`、`host`、`title`、`header`、`cert.*`、`org`、`jarm`、`tls.ja3s`。
+- 布尔字段写 `true`/`false`，不加引号。
+
+图标哈希算法：`mmh3.hash(base64(favicon))` 取有符号 32 位整数；实现已用已知向量 `b"foo" → -156908512` 自检。
+实例：`https://octodex.github.com/favicon.ico` → `icon_hash="-1766690195"`。
+
 ## 附录 B：版本记录
 
 | 版本 | 日期 | 变更 |
